@@ -27,7 +27,7 @@ void init_list(struct DoublyLinkedList *list);
 
 void add_nth_node(struct DoublyLinkedList *list, int n, struct Melody *data);
 
-struct Node* remove_nth_node(struct DoublyLinkedList *list, int n);
+void remove_nth_node(struct DoublyLinkedList *list, int n);
 
 void free_list(struct DoublyLinkedList **pp_list);
 
@@ -37,6 +37,10 @@ struct Node* get_nth_node(struct DoublyLinkedList *list, int n);
 
 int get_size(struct DoublyLinkedList *list);
 
-void choose_command(char *p, struct DoublyLinkedList *list, struct Melody *song1);
+void choose_command(char *p, struct DoublyLinkedList *list, struct Melody *song1, FILE *write);
+
+void print_string(struct DoublyLinkedList *list);
+
+void print_melody(struct Node *song, FILE *write);
 
 #endif
