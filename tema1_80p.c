@@ -14,15 +14,16 @@ int main(int argc, char *argv[]) {
     struct Melody *song1;
     struct DoublyLinkedList *playlist;
     FILE *read, *write, *song;
-    char buffer[100], c, *p, *com, out_file[50], song_file[50];
-    int n = 0, ver, i;
+    char buffer[100], *p, *com, out_file[100], song_file[100];
+    char *save_ptr1;
+    int n = 0, i;
 
     // song1 = malloc(sizeof(struct Melody));
     playlist = malloc(sizeof(struct DoublyLinkedList));
     init_list(playlist);
 
-    read = fopen (argv[1], "rt");
-    write = fopen (argv[2], "wt");
+    read = fopen(argv[1], "rt");
+    write = fopen(argv[2], "wt");
 
     if (read == NULL || write == NULL) {
         // printf("Error opening file\n");
@@ -34,19 +35,19 @@ int main(int argc, char *argv[]) {
     // printf("%s", buffer);
 
     for (i = 0; i < n; i++) {
-        
+
         fgets(buffer, 100, read);
         // printf("\n%s", buffer);
         strcpy(song_file, "songs/");
-        
-        p = strtok(buffer, " ");
+
+        p = strtok(buffer, " ");//strtok_r
         com = p;
         p = strtok(NULL, "\n");
         if (p != NULL) {
             strcpy(out_file, p);
             strcat(song_file, out_file);
-            song = fopen (song_file, "rb");
-            if(song != NULL) {
+            song = fopen(song_file, "rb");
+            if (song != NULL) {
                 fseek(song, -97, SEEK_END);
                 song1 = malloc(sizeof(struct Melody));
                 fread(song1, sizeof(struct Melody), 1, song);
@@ -109,7 +110,7 @@ void add_nth_node(struct DoublyLinkedList *list, int n, struct Melody *data) {
     mynode->prev = NULL;
 
     if (list->size == 0) {
-        
+
         (list->size)++;
         list->head = mynode;
         list->tail = mynode;
@@ -275,7 +276,7 @@ int get_size(struct DoublyLinkedList *list) {
 }
 
 void choose_command(char *p, struct DoublyLinkedList *list, struct Melody *song1, FILE *write) {
-    int pos = 0, i;
+    int i;
     struct Node *aux;
     
     // printf("%s\n", p);
@@ -357,7 +358,8 @@ void choose_command(char *p, struct DoublyLinkedList *list, struct Melody *song1
         //         return;
         //     }
         // }
-        if (list->size == 0 || (strcmp(list->cursor->data->title, song1->title) == 0)) {
+        if (list->size == 0 ||
+        (strcmp(list->cursor->data->title, song1->title) == 0)) {
             free(song1);
             return;
         }
